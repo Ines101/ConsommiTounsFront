@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Consommitounsi.Models.Event>
+
+@{
+    ViewBag.Title = "events";
+}
+
+    <h2>events</h2>
+
+@using (Html.BeginForm())
+  {
+        <table>
+            <tr>
+                <td>
+                    <div>
+                        Search by name: @Html.TextBox("searchString")
+                    </div>
+                </td>
+                <td>
+                    <input type="submit" value="Search" id="submit" />
+                </td>
+            </tr>
+        </table>
+    }
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.id_e)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name_e)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date_e)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Max_participants_e)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.admin)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_e)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name_e)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_e)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Max_participants_e)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.admin)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id_e }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id_e })|
+                    @Html.ActionLink("Details", "Details", new { id = item.id_e })
+
+                </td>
+            </tr>
+        }
+
+    </table>

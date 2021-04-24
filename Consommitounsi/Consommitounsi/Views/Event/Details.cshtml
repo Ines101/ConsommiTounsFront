@@ -1,0 +1,59 @@
+﻿@model Consommitounsi.Models.Event
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_e)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_e)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name_e)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name_e)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location_e)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location_e)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date_e)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_e)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Max_participants_e)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Max_participants_e)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.admin.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.admin.username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
