@@ -17,7 +17,7 @@ namespace Consommitounsi.Controllers
             IEnumerable<Event> events = null;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8086/pidev/servlet/");
+                client.BaseAddress = new Uri("http://localhost:8080/event/");
                 var responseTask = client.GetAsync("retrieve-all-Events");
                 responseTask.Wait();
 
@@ -47,7 +47,7 @@ namespace Consommitounsi.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8086/pidev/servlet/");
+                client.BaseAddress = new Uri("http://localhost:8080/event/");
                 var responseTask = client.GetAsync("retrieve-Event/" + id.ToString());
                 responseTask.Wait();
 
@@ -68,7 +68,7 @@ namespace Consommitounsi.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8086/pidev/servlet/");
+                client.BaseAddress = new Uri("http://localhost:8080/event/");
                 var deleteTask = client.DeleteAsync("remove-Event/" + id.ToString());
 
                 var result = deleteTask.Result;
@@ -85,7 +85,7 @@ namespace Consommitounsi.Controllers
             
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8086/pidev/servlet/add-Event");
+                client.BaseAddress = new Uri("http://localhost:8080/event/");
                 var postJob = client.PostAsJsonAsync<Event>("add-Event", evt);
                 postJob.Wait();
 
