@@ -177,12 +177,13 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\Details.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
+    <Content Include="Views\Reclamation\Create.cshtml" />
+    <Content Include="Views\Reclamation\Index.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Reclamation\" />
     <Folder Include="Views\Role\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
