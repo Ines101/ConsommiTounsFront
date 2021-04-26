@@ -17,7 +17,7 @@ namespace Consommitounsi.Models
 
         public int Max_participants_e { get; set; }
         
-        public Admin admin { get; set; }
+        public User admin { get; set; }
 
 
 

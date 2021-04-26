@@ -5,9 +5,10 @@ using System.Web;
 
 namespace Consommitounsi.Models
 {
-    public class Admin : User
+    public class Role
     {
-        public float salaryA { get; set; }
+        private long id { get; set; }
+        private string roleName { get; set; }
 
     }
 }
