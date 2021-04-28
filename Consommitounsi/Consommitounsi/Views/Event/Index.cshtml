@@ -1,47 +1,42 @@
-﻿@model IEnumerable<Consommitounsi.Models.Event>
+﻿@model  IEnumerable<Consommitounsi.Models.Event>
 
 @{
-    ViewBag.Title = "events";
+    ViewBag.Title = "Event";
 }
 
-    <h2>events</h2>
+<h2>events</h2>
 
 @using (Html.BeginForm())
-  {
-        <table>
-            <tr>
-                <td>
-                    <div>
-                        Search by name: @Html.TextBox("searchString")
-                    </div>
-                </td>
-                <td>
-                    <input type="submit" value="Search" id="submit" />
-                </td>
-            </tr>
-        </table>
-    }
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
+{
+    <table>
+        <tr>
+            <td>
+                <div>
+                    Search by name: @Html.TextBox("searchString")
+                </div>
+            </td>
+            <td>
+                <input type="submit" value="Search" id="submit" />
+            </td>
+        </tr>
+    </table>
+}
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+@*<table class="table">
         <tr>
 
+
             <th>
-                @Html.DisplayNameFor(model => model.id_e)
+                @Html.DisplayNameFor(model => model.name_e)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name_e)
+                @Html.DisplayNameFor(model => model.date_e)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date_e)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Max_participants_e)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.admin)
-            </th>
+
+
+
 
         </tr>
 
@@ -49,21 +44,14 @@
         {
             <tr>
 
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.id_e)
+                    @Html.DisplayFor(modelItem => item.name_e)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name_e)
+                    @Html.DisplayFor(modelItem => item.date_e)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date_e)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Max_participants_e)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.admin.username)
-                </td>
+
 
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.id_e }) |
@@ -75,3 +63,30 @@
         }
 
     </table>
+*@
+@foreach (var item in Model)
+{
+    <div>
+        <ul>
+            <li>
+                <a href="blog-single-post.html" class="figure">
+                    <img src="images/cutting-mustache.jpg" alt="">
+                </a>
+
+        
+                <div>
+                   
+                    
+                    <p>EVENT NAME:  @Html.DisplayFor(modelItem => item.name_e)</p>
+                    <p>DATE:  @Html.DisplayFor(modelItem => item.date_e)</p>
+
+
+                    @Html.ActionLink("Edit", "Edit", "Event", new { id = item.id_e }, new { @class = "more" })
+                    @Html.ActionLink("Delete", "Delete", "Event", new { id = item.id_e }, new { @class = "more" })
+                    @Html.ActionLink("Details", "Details", "Event", new { id = item.id_e }, new { @class = "more" })
+                  
+                </div>
+            </li>
+        </ul>
+    </div>
+}

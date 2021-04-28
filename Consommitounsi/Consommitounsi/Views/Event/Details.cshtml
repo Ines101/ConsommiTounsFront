@@ -1,54 +1,48 @@
 ﻿@model Consommitounsi.Models.Event
 
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
 <div>
     <h4>Event</h4>
     <hr />
     <dl class="dl-horizontal">
+        
+
+
         <dt>
-            @Html.DisplayNameFor(model => model.id_e)
+            @Html.DisplayNameFor(model => model.name_e)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.id_e)
+            @Html.DisplayFor(model => model.name_e)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name_e)
+            @Html.DisplayNameFor(model => model.location_e)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name_e)
+            @Html.DisplayFor(model => model.location_e)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Location_e)
+            @Html.DisplayNameFor(model => model.date_e)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Location_e)
+            @Html.DisplayFor(model => model.date_e)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Date_e)
+            @Html.DisplayNameFor(model => model.max_participants_e)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Date_e)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Max_participants_e)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Max_participants_e)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.admin.username)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.admin.username)
+            @Html.DisplayFor(model => model.max_participants_e)
         </dd>
 
     </dl>

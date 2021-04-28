@@ -12,6 +12,7 @@ namespace Consommitounsi.Controllers
     public class EventController : Controller
     {
         // GET: Event
+        // GET: Shipment
         public ActionResult Index(String searchString)
         {
             IEnumerable<Event> events = null;
@@ -29,7 +30,7 @@ namespace Consommitounsi.Controllers
                     events = readJob.Result;
                     if (!String.IsNullOrEmpty(searchString))
                     {
-                        events = events.Where(m => m.Name_e.Contains(searchString)).ToList();
+                        events = events.Where(m => m.name_e.Contains(searchString)).ToList();
                     }
                     return View(events);
                 }
@@ -41,30 +42,33 @@ namespace Consommitounsi.Controllers
             }
             return View(events);
         }
-        public ActionResult Details(int id)
+        public ActionResult Create()
         {
-            Event events = null;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Event epm)
+        {
+            string Baseurl = "http://localhost:8080/";
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/event/");
-                var responseTask = client.GetAsync("retrieve-Event/" + id.ToString());
-                responseTask.Wait();
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                // client.DefaultRequestHeaders.Add("X-Miva-API-Authorization", "MIVA xxxxxxxxxxxxxxxxxxxxxx");
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
+
+                var response = await client.PostAsJsonAsync("event/add-Event/", epm);
+                if (response.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<Event>();
-                    readTask.Wait();
-
-                    events = readTask.Result;
+                    return RedirectToAction("Index");
                 }
             }
-            return View(events);
+            return View(epm);
         }
-
-        //Delete a event
-        public ActionResult Delete(int id)
+        public ActionResult Delete(long id)
         {
             using (var client = new HttpClient())
             {
@@ -79,32 +83,67 @@ namespace Consommitounsi.Controllers
                 return RedirectToAction("Index");
             }
         }
-        [HttpPost]
-        public ActionResult Create(Event evt)
+        public ActionResult Details(long id)
         {
-            
+            Event products = null;
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:8080/event/");
-                var postJob = client.PostAsJsonAsync<Event>("add-Event", evt);
-                postJob.Wait();
+                var responseTask = client.GetAsync("retrieve-Event/" + id.ToString());
+                responseTask.Wait();
 
-                var postResult = postJob.Result;
-                if (postResult.IsSuccessStatusCode)
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "Server error occured. Please contact admin for help!");
-                // ViewBag.id_cat = new SelectList(cats, "id_cat", "name_cat");
-                return View(evt);
-            }
+                    var readTask = result.Content.ReadAsAsync<Event>();
+                    readTask.Wait();
 
+                    products = readTask.Result;
+                }
+            }
+            return View(products);
+        }
+        [HttpPost]
+        public ActionResult Edit(Event epm)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8080/");
+                var putTask = client.PutAsJsonAsync<Event>("event/modify-Event", epm);
+                putTask.Wait();
+
+                var ressult = putTask.Result;
+                if (ressult.IsSuccessStatusCode)
+
+                    return RedirectToAction("Index");
+                return View(epm);
+
+            }
         }
 
 
+        
+        public ActionResult Edit(long id)
+        {
+            Event products = null;
 
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8080/event/");
+                var responseTask = client.GetAsync("retrieve-Event/" + id.ToString());
+                responseTask.Wait();
 
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Event>();
+                    readTask.Wait();
 
-
+                    products = readTask.Result;
+                }
+            }
+            return View(products);
+        }
     }
 }

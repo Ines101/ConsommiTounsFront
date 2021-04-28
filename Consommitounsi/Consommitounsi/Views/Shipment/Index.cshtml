@@ -1,0 +1,65 @@
+﻿@model IEnumerable < Consommitounsi.Models.Shipment>
+@{
+    ViewBag.Title = "Shipment";
+}
+
+<h2>events</h2>
+
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>
+                <div>
+                    Search by name: @Html.TextBox("searchString")
+                </div>
+            </td>
+            <td>
+                <input type="submit" value="Search" id="submit" />
+            </td>
+        </tr>
+    </table>
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+
+
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+
+
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id_shipment }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id_shipment })|
+                @Html.ActionLink("Details", "Details", new { id = item.id_shipment })
+
+            </td>
+        </tr>
+    }
+
+</table>
+
