@@ -7,8 +7,8 @@ namespace Consommitounsi.Models
 {
     public class Role
     {
-        private long id { get; set; }
-        private string roleName { get; set; }
+        public long roleId { get; set; }
+        public string roleName { get; set; }
 
     }
 }

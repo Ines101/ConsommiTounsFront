@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -26,6 +27,7 @@ namespace Consommitounsi.Controllers
                     var readJob = result.Content.ReadAsAsync<IList<Reclamation>>();
                     readJob.Wait();
                     events = readJob.Result;
+                   
                     if (!String.IsNullOrEmpty(searchString))
                     {
                         events = events.Where(m => m.subject.Contains(searchString)).ToList();
@@ -40,40 +42,111 @@ namespace Consommitounsi.Controllers
             }
             return View(events);
         }
-        [HttpPost]
-        public ActionResult Create(Reclamation evt)
+        public ActionResult Create()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Reclamation epm)
+        {
+            string Baseurl = "http://localhost:8080/";
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/reclamtion/");
-                var postJob = client.PostAsJsonAsync<Reclamation>("addReclamation", evt);
-                postJob.Wait();
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                // client.DefaultRequestHeaders.Add("X-Miva-API-Authorization", "MIVA xxxxxxxxxxxxxxxxxxxxxx");
 
-                var postResult = postJob.Result;
-                if (postResult.IsSuccessStatusCode)
+                epm.created = DateTime.UtcNow;
+                epm.decision = "UNTREATED";
+                var response = await client.PostAsJsonAsync("reclamation/addReclamation", epm);
+                if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError(string.Empty, "Server error occured. Please contact admin for help!");
-                return View(evt);
+            }
+            return View(epm);
+        }
+
+        public ActionResult Delete(long id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8080/reclamation/");
+                var deleteTask = client.GetAsync("deleteReclamation/" + id.ToString());
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Index");
             }
         }
-        public ActionResult Delete(Reclamation evt)
+        public ActionResult Details(long id)
+        {
+            Reclamation products = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8080/reclamation/");
+                var responseTask = client.GetAsync("fetchById/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Reclamation>();
+                    readTask.Wait();
+
+                    products = readTask.Result;
+                }
+            }
+            return View(products);
+        }
+        [HttpPost]
+        public  ActionResult Edit(Reclamation epm)
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/reclamtion/");
-                var postJob = client.PostAsJsonAsync<Reclamation>("deleteReclamation", evt);
-                postJob.Wait();
-                if(postJob.Result.IsSuccessStatusCode)
-                {
+                client.BaseAddress = new Uri("http://localhost:8080/");
+                epm.created = DateTime.UtcNow;
+                epm.decision = "UNTREATED";
+                var putTask = client.PostAsJsonAsync<Reclamation>("reclamation/editReclamation", epm);
+                putTask.Wait();
+
+                var ressult = putTask.Result;
+                if (ressult.IsSuccessStatusCode)
+
                     return RedirectToAction("Index");
-                }
-                ModelState.AddModelError(string.Empty, "Server error occured. Please contact admin for help!");
-                return View(evt);
+                return View(epm);
 
             }
+
+
+        }
+        public ActionResult Edit(long id)
+        {
+            Reclamation products = null;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:8080/reclamation/");
+                var responseTask = client.GetAsync("fetchById/" + id.ToString());
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<Reclamation>();
+                    readTask.Wait();
+
+                    products = readTask.Result;
+                }
+            }
+            return View(products);
         }
     }
     

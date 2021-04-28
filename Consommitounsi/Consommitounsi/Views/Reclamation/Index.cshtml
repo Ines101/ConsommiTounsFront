@@ -4,65 +4,61 @@
     ViewBag.Title = "Reclamation";
 }
 
-<h2>events</h2>
+<h2>Reclamation</h2>
 
 @using (Html.BeginForm())
 {
-    <table>
-        <tr>
-            <td>
-                <div>
-                    Search by name: @Html.TextBox("searchString")
-                </div>
-            </td>
-            <td>
-                <input type="submit" value="Search" id="submit" />
-            </td>
-        </tr>
-    </table>
+    @*    <table>
+            <tr>
+                <td>
+                    <div>
+                        Search by name: @Html.TextBox("searchString")
+                    </div>
+                </td>
+                <td>
+                    <input type="submit" value="Search" id="submit" />
+                </td>
+            </tr>
+        </table>*@
 }
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-
-        <th>
-            @Html.DisplayNameFor(model => model.reclamationId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.subject)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.description)
-        </th>
 
 
-    </tr>
 
-    @foreach (var item in Model)
-    {
-<tr>
+@foreach (var item in Model)
+{
+    <div>
+        <ul>
+            <li>
+                <h2>Subject: @Html.DisplayFor(modelItem => item.subject) </h2>
+                <div>
+                    <span>
+                        Description: @Html.DisplayFor(modelItem => item.description)
+                    </span>  
+                <p>Date Created: @Html.DisplayFor(modelItem => item.created)</p>
+                <p>Decision: @Html.DisplayFor(modelItem => item.decision)</p>
+                <span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.reclamtionId }, new { @class = "more" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.reclamtionId }, new { @class = "more" })
+                    @Html.ActionLink("Details", "Details", new { id = item.reclamtionId }, new { @class = "more" })
+                </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+    @*                <h1><span>@Html.DisplayFor(modelItem => item.subject)</span></h1>
+        <ul class="gallery">
+            <li>
+                @Html.DisplayFor(modelItem => item.reclamtionId)
+                @Html.DisplayFor(modelItem => item.description)
+                @Html.DisplayFor(modelItem => item.description)
+                @Html.DisplayFor(modelItem => item.created)
 
-    <td>
-        @Html.DisplayFor(modelItem => item.reclamationId)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.subject)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.description)
-    </td>
-    @* <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.id_e }) |
-            |
-            @Html.ActionLink("Details", "Details", new { id = item.id_e })
 
-        </td>*@
-<td>
-    @Html.ActionLink("Delete", "Delete", new { id = item.reclamationId })
-</td>
-</tr>
-    }
+            </li>
+        </ul>
+        @Html.ActionLink("Delete", "Delete", new { id = item.reclamtionId }, new { @class = "more" })
+        @Html.ActionLink("Edit", "Edit", new { id = item.reclamtionId }, new {@class="more" })
+        @Html.ActionLink("Details", "Details", new { id = item.reclamtionId }, new { @class = "more" })*@
+}
+@Html.ActionLink("Create New", "Create", new { @class = "more" })
 
-</table>

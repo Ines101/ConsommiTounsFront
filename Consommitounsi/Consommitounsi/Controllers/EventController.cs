@@ -79,26 +79,31 @@ namespace Consommitounsi.Controllers
                 return RedirectToAction("Index");
             }
         }
-        [HttpPost]
-        public ActionResult Create(Event evt)
+        public ActionResult Create()
         {
-            
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(Event evt)
+        {
+            string Baseurl = "http://localhost:8080/";
+
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:8080/event/");
-                var postJob = client.PostAsJsonAsync<Event>("add-Event", evt);
-                postJob.Wait();
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                // client.DefaultRequestHeaders.Add("X-Miva-API-Authorization", "MIVA xxxxxxxxxxxxxxxxxxxxxx");
 
-                var postResult = postJob.Result;
-                if (postResult.IsSuccessStatusCode)
+
+                var response = await client.PostAsJsonAsync("event/add-Event", evt);
+                if (response.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError(string.Empty, "Server error occured. Please contact admin for help!");
-                // ViewBag.id_cat = new SelectList(cats, "id_cat", "name_cat");
-                return View(evt);
             }
-
+            return View(evt);
         }
 
 
